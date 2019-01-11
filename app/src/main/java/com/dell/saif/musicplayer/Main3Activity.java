@@ -12,7 +12,7 @@ import com.google.android.exoplayer2.util.Util;
 
 public class Main3Activity extends AppCompatActivity {
     public static PlayerView playerView;
-    Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +23,8 @@ public class Main3Activity extends AppCompatActivity {
 
         if(MainActivity.song.equals(AudioService.id)){}
             else{
-            intent = new Intent(this, AudioService.class);
-            Util.startForegroundService(this, intent);
+          Intent  intent = new Intent(this, AudioService.class);
+            Util.startForegroundService(this,intent);
         }
 
     }
