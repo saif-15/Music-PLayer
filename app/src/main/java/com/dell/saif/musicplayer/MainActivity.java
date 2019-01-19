@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 
-        AudioService.playerNotificationManager.setPlayer(null);
+       AudioService.playerNotificationManager.setPlayer(null);
         super.onDestroy();
     }
 }

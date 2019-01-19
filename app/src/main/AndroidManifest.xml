@@ -29,7 +29,8 @@
         <activity android:name=".Blank"
             android:configChanges="orientation|screenSize"/>
         <service android:name=".AudioService"
-            />
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

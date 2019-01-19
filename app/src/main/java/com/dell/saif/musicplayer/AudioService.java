@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -31,13 +33,14 @@ public class AudioService extends Service {
     public Context context=this;
     public static String id;
     public static SimpleExoPlayer player;
-    public static PlayerNotificationManager playerNotificationManager;
+    public  static PlayerNotificationManager playerNotificationManager;
     private int currentWindow=0;
     private long playbackPosition=0;
     private boolean playWhenReady=true;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         if(player!=null)
             player.release();
         initializePlayer();
@@ -47,6 +50,8 @@ public class AudioService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
 }
 
     @Override
@@ -76,7 +81,7 @@ public class AudioService extends Service {
         playerView.setControllerHideOnTouch(false);
         playerView.setControllerShowTimeoutMs(0);
         playerView.setFastForwardIncrementMs(10000);
-        playerView.setRewindIncrementMs(10000);
+       playerView.setRewindIncrementMs(10000);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow,playbackPosition);
         ConcatenatingMediaSource concatenatingMediaSource=new ConcatenatingMediaSource();
@@ -124,8 +129,7 @@ public class AudioService extends Service {
             }
         });
 
-        playerNotificationManager.setPlayer(player);
-        playerNotificationManager.setPriority(android.support.v4.app.NotificationCompat.PRIORITY_MAX);
+        playerNotificationManager.setPriority(NotificationCompat.PRIORITY_HIGH);
         playerNotificationManager.setSmallIcon(R.drawable.notification);
         playerNotificationManager.setRewindIncrementMs(10000);
         playerNotificationManager.setFastForwardIncrementMs(10000);
@@ -134,18 +138,17 @@ public class AudioService extends Service {
 
 
 
-        playerNotificationManager.setNotificationListener(new PlayerNotificationManager.NotificationListener() {
+        playerNotificationManager.setNotificationListener
+                (new PlayerNotificationManager.NotificationListener() {
             @Override
             public void onNotificationStarted(int notificationId, Notification notification) {
-                startForeground(notificationId,notification);
+               startForeground(notificationId,notification);
             }
 
             @Override
-            public void onNotificationCancelled(int notificationId) {
-                stopSelf();
-            }
+            public void onNotificationCancelled(int notificationId) { stopSelf(); }
         });
-
+        playerNotificationManager.setPlayer(player);
     }
 
 
